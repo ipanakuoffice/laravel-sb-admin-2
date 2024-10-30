@@ -28,3 +28,9 @@ Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
+Route::prefix('user-management')->group(function () {
+    Route::prefix('role')->group(function () {
+        Route::get('', 'UserManagementRoleController@index')->name('userManagementRole.index');
+    });
+});

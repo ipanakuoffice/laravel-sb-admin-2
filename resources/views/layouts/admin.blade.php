@@ -1,26 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Laravel SB Admin 2">
-    <meta name="author" content="Alejandro RH">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-
-    <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
+    @include('components.style')
 </head>
 <body id="page-top">
 
@@ -34,60 +15,47 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">SIDP</div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item {{ Nav::isRoute('home') }}">
-            <a class="nav-link" href="{{ route('home') }}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>{{ __('Dashboard') }}</span></a>
-        </li>
-
+        <x-nav-item routeName="home" iconClass="fas fa-fw fa-tachometer-alt" label="Dashboard" />
         <!-- Divider -->
         <hr class="sidebar-divider">
-
         <!-- Heading -->
-        <div class="sidebar-heading">
-            {{ __('Settings') }}
-        </div>
-
+        <x-nav-heading label="Setting"/>
         <!-- Nav Item - Profile -->
-        <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile') }}">
-                <i class="fas fa-fw fa-user"></i>
-                <span>{{ __('Profile') }}</span>
-            </a>
-        </li>
-
+        <x-nav-item routeName="profile" iconClass="fas fa-fw fa-user" label="Profile" />
         <!-- Nav Item - About -->
-        <li class="nav-item {{ Nav::isRoute('about') }}">
-            <a class="nav-link" href="{{ route('about') }}">
-                <i class="fas fa-fw fa-hands-helping"></i>
-                <span>{{ __('About') }}</span>
-            </a>
-        </li>
+        <x-nav-item routeName="about" iconClass="fas fa-fw fa-hands-helping" label="About" />
+        {{-- Collaps item  --}}
+        <x-nav-collapse id="collapseUserManagement" iconClass="fas fa-fw fa-cog" title="User Management">
+            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">Add User</a>
+            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">User Roles</a>
+            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">User Permission</a>
+        </x-nav-collapse>
 
+        <x-nav-collapse id="collapseSettings" iconClass="fas fa-fw fa-cog" title="Settings">
+            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">General Settings</a>
+            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">Security Settings</a>
+        </x-nav-collapse>
+
+        
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-
     </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
-
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
