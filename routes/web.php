@@ -33,4 +33,10 @@ Route::prefix('user-management')->group(function () {
     Route::prefix('role')->group(function () {
         Route::get('', 'UserManagementRoleController@index')->name('userManagementRole.index');
     });
+    Route::prefix('permission')->group(function () {
+        Route::get('', 'UserManagementPermissionController@index')->name('userManagementPermission.index');
+    });
+    Route::prefix('user')->group(function () {
+        Route::get('', 'UserManagementUserController@index')->name('userManagementUser.index');
+    });
 });

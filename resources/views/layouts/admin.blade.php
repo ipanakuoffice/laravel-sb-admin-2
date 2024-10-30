@@ -31,11 +31,16 @@
         <!-- Nav Item - About -->
         <x-nav-item routeName="about" iconClass="fas fa-fw fa-hands-helping" label="About" />
         {{-- Collaps item  --}}
-        <x-nav-collapse id="collapseUserManagement" iconClass="fas fa-fw fa-cog" title="User Management">
-            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">Add User</a>
-            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">User Roles</a>
-            <a class="collapse-item" href="{{ route('userManagementRole.index') }}">User Permission</a>
-        </x-nav-collapse>
+        <x-nav-collapse id="collapseUserManagement" iconClass="fas fa-fw fa-cog" title="User Management" 
+        :activeRoutes="['userManagementRole.index','userManagementPermission.index','userManagementUser.index']">
+        <a class="collapse-item {{ request()->routeIs('userManagementUser.index') ? 'active' : '' }}"
+           href="{{ route('userManagementUser.index') }}">Add User</a>
+        <a class="collapse-item {{ request()->routeIs('userManagementRole.index') ? 'active' : '' }}"
+           href="{{ route('userManagementRole.index') }}">User Roles</a>
+        <a class="collapse-item {{ request()->routeIs('userManagementPermission.index') ? 'active' : '' }}"
+           href="{{ route('userManagementPermission.index') }}">User Permission</a>
+         </x-nav-collapse>
+    
 
         <x-nav-collapse id="collapseSettings" iconClass="fas fa-fw fa-cog" title="Settings">
             <a class="collapse-item" href="{{ route('userManagementRole.index') }}">General Settings</a>
