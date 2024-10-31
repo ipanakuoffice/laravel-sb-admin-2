@@ -35,8 +35,10 @@ Route::prefix('user-management')->group(function () {
     });
     Route::prefix('permission')->group(function () {
         Route::get('', 'UserManagementPermissionController@index')->name('userManagementPermission.index');
+        Route::get('getData', 'UserManagementPermissionController@getData')->name('userManagementUser.getData');
     });
     Route::prefix('user')->group(function () {
         Route::get('', 'UserManagementUserController@index')->name('userManagementUser.index');
+        Route::get('getData', 'UserManagementUserController@getData')->name('userManagementUser.getData');
     });
 });

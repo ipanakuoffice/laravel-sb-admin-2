@@ -160,7 +160,7 @@
                             <!-- Counter - Messages -->
                             <span class="badge badge-danger badge-counter">7</span>
                         </a>
-                        <!-- Dropdown - Messages -->
+                        {{-- <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                             <h6 class="dropdown-header">
                                 Message Center
@@ -206,7 +206,7 @@
                                 </div>
                             </a>
                             <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                        </div>
+                        </div> --}}
                     </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
@@ -259,7 +259,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Maintained by <a href="https://github.com/aleckrh" target="_blank">AleckRH</a>. {{ now()->year }}</span>
+                    <span> Develop By <a href="https://linkedin.com/in/ahmadirvanmaulana" target="_blank">Ahmad Irvan Maulana</a>. {{ now()->year }}</span>
                 </div>
             </div>
         </footer>
@@ -299,8 +299,12 @@
 
 <!-- Scripts -->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+<script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+@yield('script')
 </body>
 </html>
