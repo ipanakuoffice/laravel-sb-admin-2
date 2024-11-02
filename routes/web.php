@@ -42,3 +42,16 @@ Route::prefix('user-management')->group(function () {
         Route::get('getData', 'UserManagementUserController@getData')->name('userManagementUser.getData');
     });
 });
+
+Route::prefix('examination')->group(function () {
+    Route::get('', 'ExaminationController@index')->name('Examination.index');
+});
+
+Route::prefix('patients')->group(function () {
+    Route::get('', 'PatientController@index')->name('Patient.index');
+    Route::get('getData', 'PatientController@getData')->name('Patient.getData');
+    Route::post('addPatient', 'PatientController@addPatient')->name('Patient.addPatient');
+    Route::get('editPatient/{patientId}', 'PatientController@editPatient')->name('Patient.editPatient');
+    Route::put('updatePatient/{patientId}', 'PatientController@updatePatient')->name('Patient.updatePatient');
+    Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('Patient.deletePatient');
+});

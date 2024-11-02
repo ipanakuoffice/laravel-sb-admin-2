@@ -17,13 +17,13 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->float('height');
             $table->float('weight');
-            $table->enum('gender', ['L', 'P']);
+            $table->enum('gender', ['Male', 'Female']);
             $table->string('installation');
             $table->float('daily_dose')->nullable();
             $table->float('monthly_dose')->nullable();
             $table->string('examination_type')->nullable();
-            $table->string('image_path')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

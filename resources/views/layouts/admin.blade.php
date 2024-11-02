@@ -22,6 +22,11 @@
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
         <x-nav-item routeName="home" iconClass="fas fa-fw fa-tachometer-alt" label="Dashboard" />
+        <hr class="sidebar-divider">
+        <x-nav-heading label="Data"/>
+        <x-nav-item routeName="Patient.index" iconClass="fas fa-fw fa-user" label="Patients" />
+        <x-nav-item routeName="Examination.index" iconClass="fas fa-fw fa-user" label="Examination" />
+
         <!-- Divider -->
         <hr class="sidebar-divider">
         <!-- Heading -->
@@ -299,6 +304,7 @@
 
 <!-- Scripts -->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>

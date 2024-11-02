@@ -49,7 +49,6 @@
                 type: 'GET',
                 dataType: 'json',
                 beforeSend: function(){
-                    console.log("icikiwir");
                         $.blockUI({
                         message: '<i class="icon-spinner4 spinner"></i>',
                         overlayCSS: {
