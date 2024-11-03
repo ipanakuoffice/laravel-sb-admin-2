@@ -17,10 +17,11 @@ class Patients extends Model
         'height',
         'weight',
         'gender',
-        'installation',
-        'daily_dose',
-        'monthly_dose',
-        'examination_type',
-        'image_path',
+        'modalitas',
     ];
+
+    public function doseIndicators()
+    {
+        return $this->belongsToMany(doseIndicators::class, 'dose_indicator_patient');
+    }
 }

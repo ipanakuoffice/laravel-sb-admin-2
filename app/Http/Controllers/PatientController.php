@@ -37,10 +37,8 @@ class PatientController extends Controller
             'height' => 'required|numeric',
             'weight' => 'required|numeric',
             'gender' => 'required|string|max:10',
-            'installation' => 'required|string|max:255',
-            'daily_dose' => 'required|numeric',
-            'monthly_dose' => 'required|numeric',
-            'examination_type' => 'required|string|max:255',
+            'modalitas' => 'required|string|max:255',
+            'dose_indicator.*' => 'string|max:255', // Validasi setiap elemen dalam array
         ]);
 
         DB::beginTransaction();
@@ -52,10 +50,8 @@ class PatientController extends Controller
                 'height' => $request->input('height'),
                 'weight' => $request->input('weight'),
                 'gender' => $request->input('gender'),
-                'installation' => $request->input('installation'),
-                'daily_dose' => $request->input('daily_dose'),
-                'monthly_dose' => $request->input('monthly_dose'),
-                'examination_type' => $request->input('examination_type'),
+                'modalitas' => $request->input('modalitas'),
+                'dose_indicator' => $request->input('dose_indicator'),
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
@@ -101,11 +97,9 @@ class PatientController extends Controller
             'date_of_birth' => 'required|date',
             'height' => 'required|numeric',
             'weight' => 'required|numeric',
-            'installation' => 'required|numeric',
-            'daily_dose' => 'required|numeric',
-            'monthly_dose' => 'required|numeric',
-            'examination_type' => 'required|integer',
-            'gender' => 'required|string',
+            'gender' => 'required|string|max:10',
+            'modalitas' => 'required|string|max:255',
+            'dose_indicator.*' => 'string|max:255', // Validasi setiap elemen dalam array
         ]);
 
         $patient = Patients::findOrFail($patientId);

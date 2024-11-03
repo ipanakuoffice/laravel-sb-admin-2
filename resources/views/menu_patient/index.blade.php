@@ -27,13 +27,10 @@
                         <tr>
                             <th>Name</th>
                             <th>Date of Birth</th>
-                            <th>Gender</th>
                             <th>Height (cm)</th>
                             <th>Weight (kg)</th>
-                            <th>Installation</th>
-                            <th>Daily Dose</th>
-                            <th>Monthly Dose</th>
-                            <th>Examination Type</th>
+                            <th>Gender</th>
+                            <th>Modaltias</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -97,13 +94,10 @@
                             <tr>
                                 <td>${patient.name}</td>
                                 <td>${patient.date_of_birth}</td>
-                                <td>${patient.gender}</td>
                                 <td>${patient.height}</td>
                                 <td>${patient.weight}</td>
-                                <td>${patient.installation}</td>
-                                <td>${patient.daily_dose}</td>
-                                <td>${patient.monthly_dose}</td>
-                                <td>${patient.examination_type}</td>
+                                <td>${patient.gender}</td>
+                                <td>${patient.modalitas}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" onclick="editPatient(${patient.id})">Edit</button>
                                     <button class="btn btn-danger btn-sm" onclick="deletePatient(${patient.id})">Delete</button>
@@ -185,15 +179,22 @@
             url : `patients/editPatient/${patientId}`,
             type : 'get',
             success : function(response) {
+                const doseIndicators = response.dose_indicator;
+                
                 $('#name').val(response.name);
                 $('#date_of_birth').val(response.date_of_birth);
                 $('#height').val(response.height);
                 $('#weight').val(response.weight);
                 $('#gender').val(response.gender);
-                $('#installation').val(response.installation);
-                $('#daily_dose').val(response.daily_dose);
-                $('#monthly_dose').val(response.monthly_dose);
-                $('#examination_type').val(response.examination_type);
+                $('#modalitas').val(response.modalitas);
+                $('input[name="dose_indicator[]"]').each(function() {
+                    const checkboxValue = $(this).val();
+                    if (doseIndicators.includes(checkboxValue)) {
+                        $(this).prop('checked', true); // Tandai checkbox sebagai checked
+                    } else {
+                        $(this).prop('checked', false); // Pastikan checkbox lainnya tidak tercentang
+                    }
+                });
                 $('#submitPatientForm').text('Update Patient');
                 $('#addPatientModal').modal('show');
                 $('#submitPatientForm').off('click').on('click', function(event) {

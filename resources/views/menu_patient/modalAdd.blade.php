@@ -25,6 +25,12 @@
                                 <input type="number" class="form-control" id="height" name="height" required>
                             </div>
                             <div class="form-group">
+                                <label for="weight">Weight (kg)</label>
+                                <input type="number" class="form-control" id="weight" name="weight" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6"> <!-- Kolom kedua -->
+                            <div class="form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control" id="gender" name="gender" required>
                                     <option value="">Select Gender</option>
@@ -32,28 +38,31 @@
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-6"> <!-- Kolom kedua -->
                             <div class="form-group">
-                                <label for="weight">Weight (kg)</label>
-                                <input type="number" class="form-control" id="weight" name="weight" required>
+                                <label for="modalitas">Modalitas</label>
+                                <select class="form-control" id="modalitas" name="modalitas" required>
+                                    <option value="">Select Modalitas</option>
+                                    @foreach([
+                                        'Radiografi Umum', 
+                                        'Fluoroskopi', 
+                                        'Dental Intraoral', 
+                                        'Cephalo', 
+                                        'Mamografi', 
+                                        'CT scan'
+                                    ] as $modalitas)
+                                        <option value="{{ $modalitas }}">{{ $modalitas }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="installation">Installation</label>
-                                <input type="text" class="form-control" id="installation" name="installation" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="daily_dose">Daily Dose</label>
-                                <input type="number" class="form-control" id="daily_dose" name="daily_dose" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="monthly_dose">Monthly Dose</label>
-                                <input type="number" class="form-control" id="monthly_dose" name="monthly_dose" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="examination_type">Examination Type</label>
-                                <input type="text" class="form-control" id="examination_type" name="examination_type" required>
-                            </div>
+                                <label>Indikator Dosis</label><br>
+                                @foreach(['dosis_ru' => 'Dosis RU', 'dosis_denta' => 'Dosis Denta', 'dosis_ctdi_vol' => 'Dosis Ctdi vol', 'dosis_fluoro_dap_kap' => 'Dosis fluoro DAP/KAP', 'dosis_mamo' => 'Dosis Mamo'] as $value => $label)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="dose_indicator" name="dose_indicator" value="{{ $value }}">
+                                        <label class="form-check-label" for="{{ $value }}">{{ $label }}</label>
+                                    </div>
+                                @endforeach
+                            </div>                            
                         </div>
                     </div>
                 </div>
