@@ -80,4 +80,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function createdExaminations()
+    {
+        return $this->hasMany(Examinations::class, 'created_by');
+    }
 }

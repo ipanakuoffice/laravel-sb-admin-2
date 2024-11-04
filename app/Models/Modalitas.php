@@ -6,17 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Patients extends Model
+class Modalitas extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'date_of_birth',
-        'height',
-        'weight',
-        'gender',
+        'modalitas_name'
     ];
 
     public function examinations()
