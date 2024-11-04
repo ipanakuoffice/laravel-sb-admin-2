@@ -18,8 +18,6 @@ return new class extends Migration
             $table->float('height');
             $table->float('weight');
             $table->enum('gender', ['Male', 'Female']);
-            $table->string('modalitas');
-            $table->text('dose_indicator')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
         });
