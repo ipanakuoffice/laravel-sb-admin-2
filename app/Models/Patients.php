@@ -19,9 +19,4 @@ class Patients extends Model
         'gender',
         'modalitas',
     ];
-
-    public function doseIndicators()
-    {
-        return $this->belongsToMany(doseIndicators::class, 'dose_indicator_patient');
-    }
 }
