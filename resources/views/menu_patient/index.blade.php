@@ -244,16 +244,17 @@
             }
         })
     }
-    function deletePatient(patientId) {
-        console.log("Delete patient ID:", patientId);
 
-    }
 
     function deletePatient(patientId) {
     if (confirm("Apakah Anda yakin ingin menghapus pasien ini?")) {
+        
         $.ajax({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
             url: `patients/deletePatient/${patientId}`,
-            type: 'DELETE', // Menggunakan metode DELETE
+            type: 'DELETE', 
             success: function(response) {
                 if (response.status === 'success') {
                     alert('Pasien berhasil dihapus.');
