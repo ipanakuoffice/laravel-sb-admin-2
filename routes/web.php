@@ -66,19 +66,3 @@ Route::prefix('patients')->group(function () {
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
-
-Route::post('/login', function (Request $request) {
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
-    }
-
-    return response()->json(['message' => 'Unauthorized'], 401);
-});
