@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,11 @@ Route::prefix('user-management')->group(function () {
 
 Route::prefix('examination')->group(function () {
     Route::get('', 'ExaminationController@index')->name('Examination.index');
+    Route::get('getData', 'ExaminationController@getData')->name('Examination.getData');
+    Route::post('addExamination', 'ExaminationController@addExamination')->name('Examination.addExamination');
+    Route::get('editExamination/{examinationId}', 'ExaminationController@editExamination')->name('Examination.editExamination');
+    Route::put('updateExamination/{examinationId}', 'ExaminationController@updateExamination')->name('Examination.updateExamination');
+    Route::delete('deletePatient/{examinationId', 'ExaminationController@deleteExamination')->name('Examination.deleteExamination');
 });
 
 Route::prefix('patients')->group(function () {
@@ -54,4 +60,25 @@ Route::prefix('patients')->group(function () {
     Route::get('editPatient/{patientId}', 'PatientController@editPatient')->name('Patient.editPatient');
     Route::put('updatePatient/{patientId}', 'PatientController@updatePatient')->name('Patient.updatePatient');
     Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('Patient.deletePatient');
+});
+
+
+Route::get('/csrf-token', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
+
+Route::post('/login', function (Request $request) {
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ]);
+    }
+
+    return response()->json(['message' => 'Unauthorized'], 401);
 });

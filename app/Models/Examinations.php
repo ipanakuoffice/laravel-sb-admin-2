@@ -15,7 +15,7 @@ class Examinations extends Model
         'modalitas_id',
         'dose_indicator_id',
         'tegangan',
-        'dese',
+        'dosis',
         'result',
         'note',
         'created_by'
