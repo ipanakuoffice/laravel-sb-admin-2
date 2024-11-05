@@ -37,8 +37,6 @@ class PatientController extends Controller
             'height' => 'required|numeric',
             'weight' => 'required|numeric',
             'gender' => 'required|string|max:10',
-            'modalitas' => 'required|string|max:255',
-            'dose_indicator.*' => 'string|max:255', // Validasi setiap elemen dalam array
         ]);
 
         DB::beginTransaction();
@@ -50,8 +48,6 @@ class PatientController extends Controller
                 'height' => $request->input('height'),
                 'weight' => $request->input('weight'),
                 'gender' => $request->input('gender'),
-                'modalitas' => $request->input('modalitas'),
-                'dose_indicator' => $request->input('dose_indicator'),
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
@@ -98,8 +94,6 @@ class PatientController extends Controller
             'height' => 'required|numeric',
             'weight' => 'required|numeric',
             'gender' => 'required|string|max:10',
-            'modalitas' => 'required|string|max:255',
-            'dose_indicator.*' => 'string|max:255', // Validasi setiap elemen dalam array
         ]);
 
         $patient = Patients::findOrFail($patientId);

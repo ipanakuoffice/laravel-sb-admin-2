@@ -25,12 +25,11 @@
                 <table id="list-patient-table" class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th style="width: 200px;">Name</th>
                             <th>Date of Birth</th>
                             <th>Height (cm)</th>
                             <th>Weight (kg)</th>
                             <th>Gender</th>
-                            <th>Modaltias</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -49,18 +48,24 @@
 @section('script')
 <script>
     $(document).ready(function() {
+        let isUpdateMode = false;
 
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy'
         });
 
         $('#addPatientBtn').on('click', function() {
+            isUpdateMode = false;
+            $('#addPatientForm')[0].reset();
             $('#addPatientModal').modal('show');
+            $('#submitPatientForm').text('Add Patient');
+            $('#submitPatientForm').off('click').on('click', function(event) { // Perubahan
+            event.preventDefault();
+            addDataPatient();
         });
-
+        });
+        
         getDataPatient();
-        addDataPatient();
-
     });
 
     function getDataPatient(){
@@ -97,7 +102,6 @@
                                 <td>${patient.height}</td>
                                 <td>${patient.weight}</td>
                                 <td>${patient.gender}</td>
-                                <td>${patient.modalitas}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" onclick="editPatient(${patient.id})">Edit</button>
                                     <button class="btn btn-danger btn-sm" onclick="deletePatient(${patient.id})">Delete</button>
@@ -179,28 +183,19 @@
             url : `patients/editPatient/${patientId}`,
             type : 'get',
             success : function(response) {
-                const doseIndicators = response.dose_indicator;
-                
+                isUpdateMode = true;
+                $('#submitPatientForm').data('patientId', patientId);
                 $('#name').val(response.name);
                 $('#date_of_birth').val(response.date_of_birth);
                 $('#height').val(response.height);
                 $('#weight').val(response.weight);
                 $('#gender').val(response.gender);
-                $('#modalitas').val(response.modalitas);
-                $('input[name="dose_indicator[]"]').each(function() {
-                    const checkboxValue = $(this).val();
-                    if (doseIndicators.includes(checkboxValue)) {
-                        $(this).prop('checked', true); // Tandai checkbox sebagai checked
-                    } else {
-                        $(this).prop('checked', false); // Pastikan checkbox lainnya tidak tercentang
-                    }
-                });
                 $('#submitPatientForm').text('Update Patient');
                 $('#addPatientModal').modal('show');
                 $('#submitPatientForm').off('click').on('click', function(event) {
-                event.preventDefault();
-                updatePatient(patientId);
-            });
+                    event.preventDefault();
+                    updatePatient(patientId);
+                });
             },
             error: function(xhr) {
             console.error("Error fetching patient data:", xhr);
@@ -214,7 +209,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         })
-        console.log($('#addPatientForm').serialize());
 
         $.ajax({
             url : `patients/updatePatient/${patientId}`,
