@@ -12,6 +12,7 @@
         "devmarketer/easynav": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/legacy-factories": "^1.4",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.0",
         "spatie/laravel-permission": "^6.9",

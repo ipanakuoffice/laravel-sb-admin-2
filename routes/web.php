@@ -3,6 +3,7 @@
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,9 +61,4 @@ Route::prefix('patients')->group(function () {
     Route::get('editPatient/{patientId}', 'PatientController@editPatient')->name('Patient.editPatient');
     Route::put('updatePatient/{patientId}', 'PatientController@updatePatient')->name('Patient.updatePatient');
     Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('Patient.deletePatient');
-});
-
-
-Route::get('/csrf-token', function () {
-    return response()->json(['csrf_token' => csrf_token()]);
 });
