@@ -68,5 +68,5 @@ Route::prefix('patients')->group(function () {
 Route::prefix('examinationHistory')->group(function () {
     Route::get('', 'examinationHistoryController@index')->name('examinationHistory.index');
     Route::get('getData', 'examinationHistoryController@getData')->name('examinationHistory.getData');
-    Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('examinationHistory.deletePatient');
+    Route::get('printReport', 'examinationHistoryController@printReport')->name('examinationHistory.printReport');
 });
