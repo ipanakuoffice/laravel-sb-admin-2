@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InputPemeriksaanController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,19 @@ Route::prefix('patients')->group(function () {
     Route::get('editPatient/{patientId}', 'PatientController@editPatient')->name('Patient.editPatient');
     Route::put('updatePatient/{patientId}', 'PatientController@updatePatient')->name('Patient.updatePatient');
     Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('Patient.deletePatient');
+});
+
+Route::prefix('input-pemeriksaan')->group(function () {
+    Route::get('', [InputPemeriksaanController::class, 'index'])->name('InputPemeriksaan.index');
+    Route::get('/data', [InputPemeriksaanController::class, 'getData'])->name('data.index'); // Route untuk AJAX DataTables
+    Route::post('/store', [InputPemeriksaanController::class, 'store'])->name('data.store'); // Route untuk menyimpan data baru
+    Route::get('/{id}/edit', [InputPemeriksaanController::class, 'edit'])->name('data.edit'); // Route untuk mengambil data untuk form edit
+    Route::put('/update/{id}', [InputPemeriksaanController::class, 'update'])->name('data.update'); // Route untuk memperbarui data
+    Route::delete('/destroy/{id}', [InputPemeriksaanController::class, 'destroy'])->name('data.destroy'); // Route untuk menghapus data
+});
+
+Route::prefix('riwayat-pemeriksaan')->group(function () {
+    Route::get('', 'RiwayatPemeriksaanController@index')->name('RiwayatPemeriksaan.index');
 });
 
 
