@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('dose_indicator_id')->constrained('dose_indicators')->onDelete('cascade');
             $table->text('tegangan');
             $table->text('dosis');
-            $table->string('result');
+            $table->text('result');
             $table->text('note');
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->timestamps();

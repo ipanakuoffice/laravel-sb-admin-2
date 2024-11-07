@@ -42,7 +42,11 @@ class PatientController extends Controller
         DB::beginTransaction();
 
         try {
+
+            $nip = Patients::generateUniqueNip();
+
             DB::table('patients')->insert([
+                'nip' => $nip,
                 'name' => $request->input('name'),
                 'date_of_birth' => $request->input('date_of_birth'),
                 'height' => $request->input('height'),
@@ -105,7 +109,7 @@ class PatientController extends Controller
     {
         $patient = Patients::find($patientId);
         if ($patient) {
-            $patient->delete(); // Ini akan menggunakan soft delete
+            $patient->delete();
             return response()->json(['status' => 'success']);
         }
         return response()->json(['status' => 'error'], 404);

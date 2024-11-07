@@ -4,6 +4,7 @@ use App\Http\Controllers\InputPemeriksaanController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,8 @@ Route::prefix('user-management')->group(function () {
 Route::prefix('examination')->group(function () {
     Route::get('', 'ExaminationController@index')->name('Examination.index');
     Route::get('getData', 'ExaminationController@getData')->name('Examination.getData');
+    Route::get('getDataModalitas', 'ExaminationController@getDataModalitas')->name('Examination.getDataModalitas');
+    Route::get('getDataDoseIndicators', 'ExaminationController@getDataDoseIndicators')->name('Examination.getDataDoseIndicators');
     Route::post('addExamination', 'ExaminationController@addExamination')->name('Examination.addExamination');
     Route::get('editExamination/{examinationId}', 'ExaminationController@editExamination')->name('Examination.editExamination');
     Route::put('updateExamination/{examinationId}', 'ExaminationController@updateExamination')->name('Examination.updateExamination');
@@ -76,7 +79,13 @@ Route::prefix('riwayat-pemeriksaan')->group(function () {
     Route::get('', 'RiwayatPemeriksaanController@index')->name('RiwayatPemeriksaan.index');
 });
 
+Route::prefix('examinationHistory')->group(function () {
+    Route::get('', 'examinationHistoryController@index')->name('examinationHistory.index');
+    Route::get('getData', 'examinationHistoryController@getData')->name('examinationHistory.getData');
+    Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('examinationHistory.deletePatient');
+});
 
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
+
