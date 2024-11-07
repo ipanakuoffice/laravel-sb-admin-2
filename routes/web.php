@@ -76,7 +76,13 @@ Route::prefix('riwayat-pemeriksaan')->group(function () {
     Route::get('', 'RiwayatPemeriksaanController@index')->name('RiwayatPemeriksaan.index');
 });
 
+Route::prefix('examinationHistory')->group(function () {
+    Route::get('', 'examinationHistoryController@index')->name('examinationHistory.index');
+    Route::get('getData', 'examinationHistoryController@getData')->name('examinationHistory.getData');
+    Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('examinationHistory.deletePatient');
+});
 
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
+
