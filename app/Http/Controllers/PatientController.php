@@ -105,7 +105,7 @@ class PatientController extends Controller
     {
         $patient = Patients::find($patientId);
         if ($patient) {
-            $patient->delete(); // Ini akan menggunakan soft delete
+            $patient->delete();
             return response()->json(['status' => 'success']);
         }
         return response()->json(['status' => 'error'], 404);
