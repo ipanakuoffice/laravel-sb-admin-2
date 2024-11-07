@@ -64,3 +64,9 @@ Route::prefix('patients')->group(function () {
     Route::put('updatePatient/{patientId}', 'PatientController@updatePatient')->name('Patient.updatePatient');
     Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('Patient.deletePatient');
 });
+
+Route::prefix('examinationHistory')->group(function () {
+    Route::get('', 'examinationHistoryController@index')->name('examinationHistory.index');
+    Route::get('getData', 'examinationHistoryController@getData')->name('examinationHistory.getData');
+    Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('examinationHistory.deletePatient');
+});
