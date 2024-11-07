@@ -89,4 +89,19 @@ class ExaminationController extends Controller
             ]);
         };
     }
+
+    public function editExamination(Request $request, $examinationId)
+    {
+        return response()->json([]);
+    }
+
+    public function updateExamination(Request $request, $examinationId)
+    {
+        return response()->json([]);
+    }
+
+    public function deleteExamination(Request $request, $examinationId)
+    {
+        return response()->json([]);
+    }
 }
