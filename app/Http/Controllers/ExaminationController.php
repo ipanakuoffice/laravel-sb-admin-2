@@ -26,10 +26,12 @@ class ExaminationController extends Controller
 
     public function getData(Request $request)
     {
-        $examinations = DB::table('examinations')
-            ->orderBy('updated_at', 'asc')
-            ->orderBy('created_at', 'asc')
-            ->whereNull('deleted_at')
+        $examinations = DB::table('examinations as e')
+            ->join('modalitas as m', 'e.modalitas_id', '=', 'm.id')
+            ->join('dose_indicators as di', 'e.dose_indicator_id', '=', 'di.id')
+            ->join('patients as p', 'e.patient_id', '=', 'p.id')
+            ->select('p.name', 'p.height', 'p.weight', 'm.modalitas_name', 'di.dose_indicator_name', 'e.*')
+            ->whereNull('e.deleted_at')
             ->get();
 
         if ($examinations) {
@@ -95,9 +97,14 @@ class ExaminationController extends Controller
 
     public function editExamination(Request $request, $examinationId)
     {
-        $examination = DB::table('examinations')
-            ->where('id', $examinationId)
-            ->first();
+        $examination = DB::table('examinations as e')
+            ->join('modalitas as m', 'e.modalitas_id', '=', 'm.id')
+            ->join('dose_indicators as di', 'e.dose_indicator_id', '=', 'di.id')
+            ->join('patients as p', 'e.patient_id', '=', 'p.id')
+            ->select('p.name', 'p.height', 'p.weight', 'm.modalitas_name', 'di.dose_indicator_name', 'e.*')
+            ->whereNull('e.deleted_at')
+            ->where('e.id', $examinationId)
+            ->get();
 
         if ($examination) {
             return response()->json($examination);
