@@ -26,6 +26,8 @@
         <x-nav-heading label="Data"/>
         <x-nav-item routeName="Patient.index" iconClass="fas fa-fw fa-user" label="Patients" />
         <x-nav-item routeName="Examination.index" iconClass="fas fa-fw fa-user" label="Examination" />
+        <x-nav-item routeName="InputPemeriksaan.index" iconClass="fas fa-clipboard-check" label="InputPemeriksaan" />
+        <x-nav-item routeName="RiwayatPemeriksaan.index" iconClass="fas fa-coins" label="RiwayatPemeriksaan" />
 
         <!-- Divider -->
         <hr class="sidebar-divider">
