@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ModalitasSeeder::class,
             DoseIndicatorSeeder::class,
+            UserSeeder::class
         ]);
     }
 }
