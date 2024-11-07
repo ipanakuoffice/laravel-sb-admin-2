@@ -67,13 +67,15 @@ Route::prefix('patients')->group(function () {
 });
 
 Route::prefix('input-pemeriksaan')->group(function () {
-    Route::get('', [InputPemeriksaanController::class, 'index'])->name('InputPemeriksaan.index');
-    Route::get('/data', [InputPemeriksaanController::class, 'getData'])->name('data.index'); // Route untuk AJAX DataTables
-    Route::post('/store', [InputPemeriksaanController::class, 'store'])->name('data.store'); // Route untuk menyimpan data baru
-    Route::get('/{id}/edit', [InputPemeriksaanController::class, 'edit'])->name('data.edit'); // Route untuk mengambil data untuk form edit
-    Route::put('/update/{id}', [InputPemeriksaanController::class, 'update'])->name('data.update'); // Route untuk memperbarui data
-    Route::delete('/destroy/{id}', [InputPemeriksaanController::class, 'destroy'])->name('data.destroy'); // Route untuk menghapus data
+    // Route::get('', [InputPemeriksaanController::class, 'index'])->name('InputPemeriksaan.index');
+    // Route::get('/data', [InputPemeriksaanController::class, 'getData'])->name('data.index'); // Route untuk AJAX DataTables
+    // Route::post('/store', [InputPemeriksaanController::class, 'store'])->name('data.store'); // Route untuk menyimpan data baru
+    // Route::get('/{id}/edit', [InputPemeriksaanController::class, 'edit'])->name('data.edit'); // Route untuk mengambil data untuk form edit
+    // Route::put('/update/{id}', [InputPemeriksaanController::class, 'update'])->name('data.update'); // Route untuk memperbarui data
+    // Route::delete('/destroy/{id}', [InputPemeriksaanController::class, 'destroy'])->name('data.destroy'); // Route untuk menghapus data
+    Route::resource('input-pemeriksaan', InputPemeriksaanController::class);
 });
+
 
 Route::prefix('riwayat-pemeriksaan')->group(function () {
     Route::get('', 'RiwayatPemeriksaanController@index')->name('RiwayatPemeriksaan.index');

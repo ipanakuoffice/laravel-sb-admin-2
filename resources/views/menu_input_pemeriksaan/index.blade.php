@@ -45,14 +45,21 @@
 @section('script')
 <script>
     $(document).ready(function() {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         var table = $('#input-pemeriksaan-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('data.index') }}", 
+            ajax: "{{ route('input-pemeriksaan.index') }}", 
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'name', name: 'name' },
-                { data: 'modalitas', name: 'modalitas' },
+                { data: 'modalitas_name', name: 'modalitas_name' },
                 { data: 'created_at', name: 'created_at' },
                 { data: 'creator', name: 'creator' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
@@ -69,7 +76,22 @@
         $('#saveBtn').click(function(e) {
             e.preventDefault();
             let action = $(this).data('action');
-            let url = action === 'add' ? "{{ route('data.store') }}" : "{{ route('data.update', '') }}/" + $('#dataId').val();
+            let url = action === 'add' ? "{{ route('input-pemeriksaan.store') }}" : "{{ route('input-pemeriksaan.update', '') }}/" + $('#dataId').val();
+            
+            // Validasi Form Data sebelum mengirim
+            let formData = $('#dataForm').serializeArray();
+            let isValid = true;
+            formData.forEach(function(field) {
+                if (!field.value) {
+                    isValid = false;
+                    alert('Field ' + field.name + ' is required.');
+                    return false; // Keluar dari loop jika ada field kosong
+                }
+            });
+
+            if (!isValid) {
+                return;
+            }
 
             $.ajax({
                 url: url,
@@ -81,15 +103,23 @@
                     alert(response.message);
                 },
                 error: function(response) {
-                    console.error("Error:", response);
-                    alert('An error occurred. Please try again.');
+                    if (response.responseJSON && response.responseJSON.errors) {
+                        let errors = response.responseJSON.errors;
+                        let errorMessage = '';
+                        for (let field in errors) {
+                            errorMessage += errors[field].join(', ') + '\n';
+                        }
+                        alert(errorMessage);
+                    } else {
+                        alert('An error occurred. Please try again.');
+                    }
                 }
             });
         });
 
         $('body').on('click', '.editBtn', function() {
             let id = $(this).data('id');
-            $.get("{{ route('data.index') }}/" + id + "/edit", function(data) {
+            $.get("{{ route('input-pemeriksaan.index') }}/" + id + "/edit", function(data) {
                 $('#dataModal').modal('show');
                 $('#modalTitle').text("Edit Data");
                 $('#dataId').val(data.id);
@@ -103,7 +133,7 @@
             let id = $(this).data('id');
             if (confirm("Are you sure you want to delete this data?")) {
                 $.ajax({
-                    url: "{{ route('data.destroy', '') }}/" + id,
+                    url: "{{ route('input-pemeriksaan.destroy', '') }}/" + id,
                     type: "DELETE",
                     success: function(response) {
                         table.ajax.reload();

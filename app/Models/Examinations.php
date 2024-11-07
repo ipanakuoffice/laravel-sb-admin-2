@@ -18,7 +18,10 @@ class Examinations extends Model
         'dosis',
         'result',
         'note',
-        'created_by'
+        'created_by',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     public function patient()
