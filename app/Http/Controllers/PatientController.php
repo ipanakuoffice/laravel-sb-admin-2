@@ -42,7 +42,11 @@ class PatientController extends Controller
         DB::beginTransaction();
 
         try {
+
+            $nip = Patients::generateUniqueNip();
+
             DB::table('patients')->insert([
+                'nip' => $nip,
                 'name' => $request->input('name'),
                 'date_of_birth' => $request->input('date_of_birth'),
                 'height' => $request->input('height'),
