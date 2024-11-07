@@ -25,6 +25,7 @@
                 <table id="list-patient-table" class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>NIP</th>
                             <th style="width: 200px;">Name</th>
                             <th>Date of Birth</th>
                             <th>Height (cm)</th>
@@ -97,6 +98,7 @@
                     $.each(response, function(index, patient) {
                         rows += `
                             <tr>
+                                <td>${patient.nip}</td>
                                 <td>${patient.name}</td>
                                 <td>${patient.date_of_birth}</td>
                                 <td>${patient.height}</td>
