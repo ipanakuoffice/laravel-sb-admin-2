@@ -17,7 +17,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Patient</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List Plan Examination</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -26,9 +26,9 @@
                         <tr>
                             <th>No</th>
                             <th style="width: 200px;">Name</th>
+                            <th>NIP</th>
                             <th>Modalitas</th>
                             <th>Created</th>
-                            <th>Creator</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -59,9 +59,9 @@
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 { data: 'name', name: 'name' },
+                { data: 'nip', name: 'nip' },
                 { data: 'modalitas_name', name: 'modalitas_name' },
-                { data: 'created_at', name: 'created_at' },
-                { data: 'creator', name: 'creator' },
+                { data: 'created', name: 'created' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });
@@ -76,26 +76,17 @@
         $('#saveBtn').click(function(e) {
             e.preventDefault();
             let action = $(this).data('action');
-            let url = action === 'add' ? "{{ route('input-pemeriksaan.store') }}" : "{{ route('input-pemeriksaan.update', '') }}/" + $('#dataId').val();
+            let id = $('#dataId').val(); 
             
-            // Validasi Form Data sebelum mengirim
-            let formData = $('#dataForm').serializeArray();
-            let isValid = true;
-            formData.forEach(function(field) {
-                if (!field.value) {
-                    isValid = false;
-                    alert('Field ' + field.name + ' is required.');
-                    return false; // Keluar dari loop jika ada field kosong
-                }
-            });
+            let url = action === 'add'
+                ? "{{ route('input-pemeriksaan.store') }}" 
+                : "{{ route('input-pemeriksaan.update', ':id') }}".replace(':id', id);
 
-            if (!isValid) {
-                return;
-            }
+            let type = action === 'add' ? "POST" : "PUT";
 
             $.ajax({
                 url: url,
-                type: action === 'add' ? "POST" : "PUT",
+                type: type,
                 data: $('#dataForm').serialize(),
                 success: function(response) {
                     $('#dataModal').modal('hide');
@@ -117,14 +108,22 @@
             });
         });
 
+
         $('body').on('click', '.editBtn', function() {
             let id = $(this).data('id');
             $.get("{{ route('input-pemeriksaan.index') }}/" + id + "/edit", function(data) {
                 $('#dataModal').modal('show');
                 $('#modalTitle').text("Edit Data");
+               
                 $('#dataId').val(data.id);
-                $('#name').val(data.name);
-                $('#modalitas').val(data.modalitas);
+                $('#patient_id').val(data.patient_id);  
+                $('#modalitas_id').val(data.modalitas_id);  
+                $('#dose_indicator_id').val(data.dose_indicator_id);
+                $('#tegangan').val(data.tegangan);  
+                $('#dosis').val(data.dosis); 
+                $('#result').val(data.result);  
+                $('#note').val(data.note);  
+                
                 $('#saveBtn').data('action', 'update');
             });
         });
