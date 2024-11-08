@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\DoseIndicators;
 use App\Models\Modalitas;
-use App\Models\User;
-use App\Models\Examination; // Menambahkan model untuk Examination
 use App\Models\Examinations;
 use App\Models\Patients;
 use Illuminate\Http\Request;
@@ -16,15 +14,9 @@ use Yajra\DataTables\DataTables;
 
 class InputPemeriksaanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        // Mendapatkan data pasien yang memiliki role 'patient'
-        // $patients = User::role('patient')->get();
         $patients = Patients::all();
-        // Mendapatkan semua modalitas dan dose indicators
         $modalities = Modalitas::all(); 
         $doseIndicators = DoseIndicators::all(); 
 
@@ -34,27 +26,36 @@ class InputPemeriksaanController extends Controller
                 ->join('dose_indicators as di', 'e.dose_indicator_id', '=', 'di.id')
                 ->join('patients as p', 'e.patient_id', '=', 'p.id')
                 ->join('users as u', 'u.id', '=', 'e.created_by')
-                ->select('p.name', 'm.modalitas_name', 'di.dose_indicator_name', 'e.created_at', 'u.name as creator', 'e.id')
+                ->select('p.name','p.nip', 'm.modalitas_name', 'di.dose_indicator_name', 'e.created_at', 'u.name as creator', 'e.id', 'e.dosis', 'e.tegangan' )
                 ->whereNull('e.deleted_at');
             
             return DataTables::of($examinations)
-                ->addIndexColumn() // Automatically add the row number column
-                ->addColumn('action', function ($row) {
-                    return '<button class="editBtn" data-id="' . $row->id . '">Edit</button> <button class="deleteBtn" data-id="' . $row->id . '">Delete</button>';
-                })
-                ->make(true);
+            ->addIndexColumn()
+            ->addColumn('modalitas_name', function ($row) {
+                return  '<strong>' . $row->modalitas_name . '</strong><br>' .
+                        'Indikator: '. $row->dose_indicator_name . '<br>' .
+                        'Tegangan: ' . $row->tegangan . '<br>' .
+                        'Dosis: ' . $row->dosis;
+            })
+            ->addColumn('created', function ($row) {
+                return '<strong>Creator</strong>: ' . $row->creator . '<br>' .
+                       '<strong>Created at</strong>: ' . $row->created_at;
+            })
+            ->addColumn('action', function ($row) {
+                return '<button class="btn btn-primary btn-sm editBtn" data-id="' . $row->id . '">Edit</button> 
+                        <button class="btn btn-danger btn-sm deleteBtn" data-id="' . $row->id . '">Delete</button>';
+            })
+            ->rawColumns(['modalitas_name', 'created', 'action'])
+            ->make(true);
+            
         }
         
-        // Mengirim data ke view
+    
         return view('menu_input_pemeriksaan.index', compact('patients', 'modalities', 'doseIndicators'));
     }
 
-    /**
-     * Menyimpan data pemeriksaan baru.
-     */
     public function store(Request $request)
     {
-        // dd($request);
         $validated = $request->validate([
                         'patient_id' => 'required|numeric',
                         'modalitas_id' => 'required|numeric',
@@ -101,24 +102,14 @@ class InputPemeriksaanController extends Controller
         };
     }
 
-    /**
-     * Mengambil data pemeriksaan untuk keperluan editing.
-     */
     public function edit(string $id)
     {
-        // Mengambil data pemeriksaan berdasarkan ID
         $examination = Examinations::findOrFail($id);
-        
-        // Mengembalikan data pemeriksaan dalam bentuk JSON
         return response()->json($examination);
     }
 
-    /**
-     * Memperbarui data pemeriksaan.
-     */
     public function update(Request $request, string $id)
     {
-        // Validasi input
         $validated = $request->validate([
             'patient_id' => 'required|exists:users,id',
             'modalitas_id' => 'required|exists:modalitas,id',
@@ -128,32 +119,23 @@ class InputPemeriksaanController extends Controller
         ]);
 
         try {
-            // Menemukan data pemeriksaan yang akan diupdate
             $examination = Examinations::findOrFail($id);
-
-            // Memperbarui data pemeriksaan
             $examination->update($validated);
 
             return response()->json(['message' => 'Data pemeriksaan berhasil diperbarui']);
         } catch (\Exception $e) {
-            // Menangani error dan mencatatnya ke log
             return response()->json(['error' => 'Gagal memperbarui data pemeriksaan'], 500);
         }
     }
 
-    /**
-     * Menghapus data pemeriksaan.
-     */
     public function destroy(string $id)
     {
         try {
-            // Menghapus data pemeriksaan berdasarkan ID
             $examination = Examinations::findOrFail($id);
             $examination->delete();
 
             return response()->json(['message' => 'Data pemeriksaan berhasil dihapus']);
         } catch (\Exception $e) {
-            // Menangani error dan mencatatnya ke log
             return response()->json(['error' => 'Gagal menghapus data pemeriksaan'], 500);
         }
     }

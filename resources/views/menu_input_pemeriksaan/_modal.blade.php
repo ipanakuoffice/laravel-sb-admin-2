@@ -2,8 +2,8 @@
 <div class="modal fade" id="dataModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">    <div class="modal-dialog">
         <div class="modal-content">
             <form id="dataForm">
-                <!-- CSRF Token -->
                 <meta name="csrf-token" content="{{ csrf_token() }}">
+                <input type="hidden" id="dataId" name="dataId">
 
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitle">Add/Edit Data</h5>
