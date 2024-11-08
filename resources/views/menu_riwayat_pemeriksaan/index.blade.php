@@ -61,7 +61,7 @@
                 {
                 data: null, // Kolom untuk tombol aksi
                 render: function(data, type, row) {
-                    return '<button class="btn btn-primary btn-print" data-id="'+ row.id +'">Print</button>';
+                    return '<button class="btn btn-primary btn-print" data-id="'+ row.id +'">Detail</button>';
                 },
                 orderable: false,  // Menonaktifkan pengurutan pada kolom aksi
                 searchable: false  // Menonaktifkan pencarian pada kolom aksi
