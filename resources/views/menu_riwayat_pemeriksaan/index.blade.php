@@ -27,9 +27,11 @@
                     <tr>
                         <th>No</th>
                         <th style="width: 200px;">Name</th>
+                        <th> NIP </th>
                         <th>Modalitas</th>
                         <th>Total Pemeriksaan</th>
                         <th>Tanggal Periksa Terakhir</th>
+                        <th>Total Pemeriksaan </th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -43,5 +45,30 @@
 @endsection
 
 @section('script')
+<script>
+    $(document).ready(function() {
+        var examinationHistory = @json($examinationHistory); // Mengonversi koleksi ke array JSON
+        $('#riwayat-pemeriksaan-table').DataTable({
+            data: examinationHistory,
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'name', name: 'name' },
+                { data: 'nip', name: 'nip' },
+                { data: 'modalitas_name', name: 'modalitas_name' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'updated_at', name: 'updated_at' },
+                { data: 'total_pemeriksaan', name: 'total_pemeriksaan' },
+                {
+                data: null, // Kolom untuk tombol aksi
+                render: function(data, type, row) {
+                    return '<button class="btn btn-primary btn-print" data-id="'+ row.id +'">Print</button>';
+                },
+                orderable: false,  // Menonaktifkan pengurutan pada kolom aksi
+                searchable: false  // Menonaktifkan pencarian pada kolom aksi
+                }
+            ]
+        });
+    });
+</script>
 
 @endsection
