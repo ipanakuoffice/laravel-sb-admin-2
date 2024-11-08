@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Examinations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,30 +47,37 @@ class RiwayatPemeriksaanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show($patientId, Request $request)
     {
-        $patientId = $request->input('patient_id');
-        $modalitasId = $request->input('modalitas_id');
+        $modalitasId = $request->query('modalitas_id');
 
         $detailExaminationHistory = DB::table('examinations as e')
             ->join('patients as p', 'e.patient_id', '=', 'p.id')
             ->join('modalitas as m', 'e.modalitas_id', '=', 'm.id')
             ->join('dose_indicators as di', 'e.dose_indicator_id', '=', 'di.id')
-            ->select('p.name', 'm.modalitas_name', 'di.dose_indicator_name as dose_indicators', 'e.*')
-            ->where('p.id', 1)
-            ->where('m.id', 1)
+            ->select('p.name', 'm.modalitas_name', 'di.dose_indicator_name', 'e.created_at', 'p.weight', 'p.height', 'p.nip', 'e.patient_id', 'e.*')  // Pastikan kolom ini sesuai
+            ->where('p.id', $patientId)  // Filter berdasarkan patient_id
+            ->where('m.id', $modalitasId)  // Filter berdasarkan modalitas_id
             ->get();
 
-        dd($detailExaminationHistory);
-        return ($detailExaminationHistory);
+        return response()->json($detailExaminationHistory);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($patientId, Request $request)
     {
         //
+        // Mengambil dua parameter dari request
+        $modalitasId = $request->query('modalitas_id');
+
+        // Query untuk mendapatkan detail pemeriksaan berdasarkan kedua parameter tersebut
+
+
+        // Mengembalikan data sebagai respons JSON
+        return response()->json($detailExaminationHistory);
     }
 
     /**
@@ -88,11 +96,24 @@ class RiwayatPemeriksaanController extends Controller
         //
     }
 
-    public function showChart()
+    public function showChart(Request $request)
     {
-        $tegangan = [220, 230, 240, 250, 260]; // Contoh data tegangan
-        $dosis = [10, 15, 20, 25, 30]; // Contoh data dosis
+        $patientId = $request->query('patientId');
+        $modalitasId = $request->query('modalitasId');
+        $doseIndicatorId = $request->query('doseIndicatorId');
 
-        return view('chart', compact('tegangan', 'dosis'));
+        // Fetch data based on the patient, modalitas, and dose indicator
+        $data = DB::table('examinations as e')
+            ->join('patients as p', 'e.patient_id', '=', 'p.id')
+            ->join('modalitas as m', 'e.modalitas_id', '=', 'm.id')
+            ->join('dose_indicators as di', 'e.dose_indicator_id', '=', 'di.id')
+            ->where('p.id', $patientId)
+            ->where('m.id', $modalitasId)
+            ->where('di.id', $doseIndicatorId)
+            ->select('e.dosis', 'e.tegangan')
+            ->get();
+
+        // Return as JSON for use in JavaScript
+        return response()->json($data);
     }
 }

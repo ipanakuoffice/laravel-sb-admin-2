@@ -74,17 +74,10 @@ Route::prefix('input-pemeriksaan')->group(function () {
 
 Route::prefix('riwayat-pemeriksaan')->group(function () {
     Route::resource('riwayat-pemeriksaan', RiwayatPemeriksaanController::class);
+    Route::get('/chart', [RiwayatPemeriksaanController::class, 'showChart'])->name('riwayat-pemeriksaan.chart');
 });
 
-Route::prefix('examinationHistory')->group(function () {
-    Route::get('', 'examinationHistoryController@index')->name('examinationHistory.index');
-    Route::get('getData', 'examinationHistoryController@getData')->name('examinationHistory.getData');
-    Route::delete('deletePatient/{id}', 'PatientController@deletePatient')->name('examinationHistory.deletePatient');
-});
 
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
-
-
-Route::get('/chart', [RiwayatPemeriksaanController::class, 'showChart']);
