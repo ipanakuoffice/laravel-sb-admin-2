@@ -79,7 +79,7 @@ Route::prefix('input-pemeriksaan')->group(function () {
 
 
 Route::prefix('riwayat-pemeriksaan')->group(function () {
-    Route::get('', 'RiwayatPemeriksaanController@index')->name('RiwayatPemeriksaan.index');
+    Route::resource('riwayat-pemeriksaan', RiwayatPemeriksaanController::class);
 });
 
 Route::prefix('examinationHistory')->group(function () {

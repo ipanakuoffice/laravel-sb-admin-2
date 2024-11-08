@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-
+    @include('menu_riwayat_pemeriksaan._modal')
 @endsection
 
 @section('script')
@@ -61,13 +61,37 @@
                 {
                 data: null, // Kolom untuk tombol aksi
                 render: function(data, type, row) {
-                    return '<button class="btn btn-primary btn-print" data-id="'+ row.id +'">Detail</button>';
+                    return '<button class="btn btn-primary btn-print" id="showDetailHistory" data-id="'+ row.id +'" data-patient-id="'+ row.patientId +'" data-m-id="'+ row.modalitasId +'">Detail</button>';
                 },
                 orderable: false,  // Menonaktifkan pengurutan pada kolom aksi
                 searchable: false  // Menonaktifkan pencarian pada kolom aksi
                 }
             ]
         });
+
+        $(document).on('click', '#showDetailHistory', function() {
+            $('#detaiExaminationHistory').modal('show');
+            const patientId = $(this).data('patient-id');
+            const mId = $(this).data('m-id');
+            console.log(mId, patientId);
+
+            var table = $('#input-pemeriksaan-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('riwayat-pemeriksaan.show') }}",
+                data: function(d) {
+                    // Menambahkan patientId dan mId ke dalam data yang dikirim ke server
+                    d.patient_id = patientId;
+                    d.modalitas_id = mId;
+                },
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'name', name: 'name' },
+                    // Tambahkan kolom lain sesuai kebutuhan
+                ]
+            });
+        });
+
     });
 </script>
 
