@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Patients;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,7 +31,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ModalitasSeeder::class,
             DoseIndicatorSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            PatientSeeder::class,
+            ExaminationSeeder::class,
+
         ]);
     }
 }
