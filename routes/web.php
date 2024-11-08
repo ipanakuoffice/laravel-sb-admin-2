@@ -5,6 +5,7 @@ use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RiwayatPemeriksaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,3 +92,5 @@ Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 
+
+Route::get('/chart', [RiwayatPemeriksaanController::class, 'showChart']);

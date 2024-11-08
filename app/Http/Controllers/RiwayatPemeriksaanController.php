@@ -88,4 +88,12 @@ class RiwayatPemeriksaanController extends Controller
     {
         //
     }
+
+    public function showChart()
+    {
+        $tegangan = [220, 230, 240, 250, 260]; // Contoh data tegangan
+        $dosis = [10, 15, 20, 25, 30]; // Contoh data dosis
+
+        return view('chart', compact('tegangan', 'dosis'));
+    }
 }
